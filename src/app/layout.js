@@ -23,16 +23,16 @@ export const metadata = {
     "AI Name Generator",
     "Unique Names"
   ],
-  authors: [{ name: "NameCrafter Team", url: "https://yourwebsite.com" }],
+  authors: [{ name: "NameCrafter Team", url: "https://name-crafter.vercel.app/" }],
   creator: "NameCrafter",
   openGraph: {
     title: "NameCrafter - Find the Perfect Name Instantly!",
     description: "Get thousands of unique, beautiful, and meaningful names in English and Urdu. Powered by AI. Best for babies, brands, pets, and more!",
-    url: "https://yourwebsite.com",
+    url: "https://name-crafter.vercel.app/",
     siteName: "NameCrafter",
     images: [
       {
-        url: "https://yourwebsite.com/og-image.png",
+        url: "https://name-crafter.vercel.app/og-image.png",
         width: 1200,
         height: 630,
         alt: "NameCrafter - Random Name Generator",
