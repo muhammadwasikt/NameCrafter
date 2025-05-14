@@ -1,0 +1,78 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react"
+import { getReq } from "@/app/axios/axios"
+import Skeletons from "@/app/modules/Skeleton";
+import { Button } from "../ui/button";
+
+const NameList = ({ type, path }) => {
+    const [names, setNames] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [isCopying, setIsCopying] = useState(false)
+    const [copiedText, setCopiedText] = useState("")
+
+    const handleCopy = (name) => {
+        navigator.clipboard.writeText(name)
+        setIsCopying(true)
+        setCopiedText(name)
+    }
+    useEffect(() => {
+        const handleVesibility = () => {
+            if (document.visibilityState === "hidden") {
+                setIsCopying(false)
+                setCopiedText("")
+            }
+        }
+        document.addEventListener("visibilitychange", handleVesibility)
+        return () => {
+            document.removeEventListener("visibilitychange", handleVesibility)
+        }
+    }, [isCopying])
+    const getNames = async () => {
+        try {
+            setLoading(true)
+            const response = await getReq(`/${path}`)
+            setNames(response)
+            setLoading(false)
+        }
+        catch (error) {
+            console.error("Error fetching names:", error)
+            setLoading(false)
+        }
+    }
+    useEffect(() => {
+        if (path) {
+            getNames()
+        }
+    }, [path, type])
+
+    return (
+        <div className="py-10 w-full">
+            <h1 className="text-center text-2xl font-extrabold bg-gradient-to-r from-pink-500 to-orange-400 bg-clip-text text-transparent">{type?.toUpperCase()}</h1>
+            {loading ? <Skeletons /> :
+                <div className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 p-2 w-full">
+                    {names?.slice(0, 20)?.map((item, index) => (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            // transition={{ delay: 1, duration: 1 }}
+                            className="mt-2 text-sm text-pink-500"
+                            key={index}
+                        >
+                            <div className="p-3 bg-muted rounded-sm shadow-md relative cursor-pointer h-full flex justify-center items-center">
+                                <h2 className="text-lg shrink-1 text-center px-2">{item.name}</h2>
+
+                                <Button variant="ghost" className="absolute w-full top-2 flex justify-end bg-clip-text bg-orange-400 text-transparent" onClick={() => handleCopy(item?.name)} >
+                                    {isCopying && copiedText === item.name ? "Copied!" : "Copy"}
+                                </Button>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>}
+        </div>
+
+    )
+}
+
+export default NameList

@@ -3,7 +3,7 @@ import Hero from "./modules/Hero"
 
 const page = () => {
   return (
-    <div className='bg-[#FFFDF7] h-screen'>
+    <div >
       <Hero />
     </div>
   )

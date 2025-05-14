@@ -1,5 +1,5 @@
 export const names = {
-    "muslimBoysNames": [
+    "muslim-boys-names": [
         { "name": "Ayaan", "meaning": "اللہ کا تحفہ" },
         { "name": "Zayn", "meaning": "خوبصورتی، حسن" },
         { "name": "Omar", "meaning": "فلاح، زندگی" },
@@ -908,7 +908,7 @@ export const names = {
         { "name": "Ziya", "meaning": "روشنی، چمک" },
         { "name": "Zubair", "meaning": "عقلمند" }
     ],
-    "muslimGirlsNames": [
+    "muslim-girls-names": [
         { "name": "Aaliyah", "meaning": "اعلیٰ، بلند، عظیم" },
         { "name": "Amina", "meaning": "امانت دار، سچی" },
         { "name": "Fatima", "meaning": "جس کی پرورش کی گئی ہو، وہ جو دودھ پیتی ہو" },
@@ -1526,7 +1526,7 @@ export const names = {
         { "name": "Zahida", "meaning": "پرہیزگار، عبادت کرنے والی" },
         { "name": "Zainab", "meaning": "خوبصورت، خوشبو" }
     ],
-    "petNames": [
+    "pet-names": [
         { "name": "Bella" },
         { "name": "Max" },
         { "name": "Charlie" },
@@ -3109,7 +3109,7 @@ export const names = {
         { "name": "Koda" },
         { "name": "Betsy" }
     ],
-    "instagramUsersNames": [
+    "instagram-users-names": [
         { "name": "PixelVibes_" },
         { "name": "DreamWave_7" },
         { "name": "UrbanMystic_22" },
@@ -3953,7 +3953,7 @@ export const names = {
         { "name": "TwilightGlow_31" },
         { "name": "VibrantExplorer_13" }
     ],
-    "fantasyNames": [
+    "fantasy-names": [
         { "name": "Eldorion" },
         { "name": "Aelindra" },
         { "name": "Thalrik" },
@@ -4714,7 +4714,7 @@ export const names = {
         { "name": "Rylion" },
         { "name": "Talzoth" }
     ],
-    "businessNames": [
+    "business-names": [
         { "name": "TechNexus" },
         { "name": "EcoSolutions" },
         { "name": "PrimeInnovations" },

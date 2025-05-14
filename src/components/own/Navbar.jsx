@@ -4,11 +4,35 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useEffect, useState } from "react";
 
 
 const Navbar = () => {
+  const [isVisible, setIsVisible] = useState(true);
+  const [isScrolling, setIsScrolling] = useState(0);
+  const [openSidebar, setOpenSidebar] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > isScrolling) {
+      setIsVisible(false);
+    }
+    else {
+      setIsVisible(true);
+    }
+    setIsScrolling(window.scrollY);
+  }
+
+  const handleSidebar = () => {
+    setOpenSidebar(!openSidebar);
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () =>
+      window.removeEventListener("scroll", handleScroll);
+  }, [isScrolling]);
   return (
-    <nav className="bg-muted shadow-md fixed w-full z-50">
+    <nav className={`bg-muted shadow-md sticky top-0 w-full ${isVisible ? "translate-y-0" : "-translate-y-full"} transition-transform duration-300 ease-in-out z-50`}>
       <div className="max-w-7xl mx-auto  px-1 min-[250px]:px-4 py-3 flex items-center justify-between">
 
         {/* Logo */}
@@ -18,31 +42,23 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 text-lg items-center">
-          <Link href="/" className="text-pink-600 hover:text-orange-400">Home</Link>
-          <Link href="#categories" className="text-pink-600 hover:text-orange-400">Categories</Link>
-          <Link href="#about" className="text-pink-600 hover:text-orange-400">About</Link>
-          <Link href="#contact" className="text-pink-600 hover:text-orange-400">Contact</Link>
-          <Button className="rounded-full text-white bg-gradient-to-r from-pink-600 to-orange-400">
-            Generate
-          </Button>
+          <Link href="/home" className="text-pink-600 hover:text-orange-400">Home</Link>
+          <Link href="/about" className="text-pink-600 hover:text-orange-400">About</Link>
+          <Link href="/contact" className="text-pink-600 hover:text-orange-400">Contact</Link>
         </div>
 
         {/* Mobile Menu */}
         <div className="md:hidden">
-          <Sheet>
+          <Sheet open={openSidebar} onOpenChange={setOpenSidebar}>
             <SheetTrigger asChild>
               <Button variant="secondary" size="icon">
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="p-6 flex flex-col ">
-              <Link href="/" className="text-lg font-medium text-gray-900">Home</Link>
-              <Link href="#categories" className="text-lg font-medium text-gray-900">Categories</Link>
-              <Link href="#about" className="text-lg font-medium text-gray-900">About</Link>
-              <Link href="#contact" className="text-lg font-medium text-gray-900">Contact</Link>
-              <Button className="rounded-full bg-blue-600 hover:bg-blue-700 text-white">
-                Generate
-              </Button>
+            <SheetContent side="right" className="p-6 flex flex-col bg-muted">
+              <Link href="/home" onClick={()=>handleSidebar()} className="text-lg font-medium bg-clip-text bg-pink-500 text-transparent active:text-orange-400">Home</Link>
+              <Link href="/about" onClick={()=>handleSidebar()} className="text-lg font-medium bg-clip-text bg-pink-500 text-transparent active:text-orange-400">About</Link>
+              <Link href="/contact" onClick={()=>handleSidebar()} className="text-lg font-medium bg-clip-text bg-pink-500 text-transparent active:text-orange-400">Contact</Link>
             </SheetContent>
           </Sheet>
         </div>

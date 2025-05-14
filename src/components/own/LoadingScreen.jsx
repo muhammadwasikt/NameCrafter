@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const LoadingScreen = ({ children }) => {
     const [loading, setLoading] = useState(true);
@@ -30,6 +31,7 @@ const LoadingScreen = ({ children }) => {
                     <div>
                         <Navbar />
                         {children}
+                        <Footer />
                     </div>
             }
         </>

@@ -1,16 +1,7 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import LoadingScreen from "@/components/own/LoadingScreen";
+import { Toaster } from "react-hot-toast";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata = {
   title: "NameCrafter - Random Name Generator",
@@ -56,10 +47,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="font-[popins] bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
         <LoadingScreen>
+          <Toaster />
           {children}
         </LoadingScreen>
       </body>

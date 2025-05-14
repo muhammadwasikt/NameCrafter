@@ -2,17 +2,18 @@ import { NextResponse } from "next/server";
 import { names } from "@/app/utils/names";
 
 export async function GET(request) {
-    const muslimBoysNamesList = [];
+    const slug = request.nextUrl.pathname.split("/").pop();
+    const nameList = names[slug]
+    const name = [];
     const uniqueNames = new Set();
 
-    for (const item of names.muslimBoysNames) {
+    for (const item of nameList) {
         if (!uniqueNames.has(item.name)) {
             uniqueNames.add(item.name);
-            muslimBoysNamesList.push(item);
+            name.push(item);
         }
     }
+    name.sort(() => Math.random() - 0.5);
 
-    muslimBoysNamesList.sort(() => Math.random() - 0.5).length = 10
-
-    return NextResponse.json(muslimBoysNamesList );
+  return NextResponse.json(name);
 }
