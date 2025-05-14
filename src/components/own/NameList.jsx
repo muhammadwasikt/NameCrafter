@@ -11,6 +11,7 @@ const NameList = ({ type, path }) => {
     const [loading, setLoading] = useState(false)
     const [isCopying, setIsCopying] = useState(false)
     const [copiedText, setCopiedText] = useState("")
+    const [isRefreshing, setIsRefreshing] = useState(false)
 
     const handleCopy = (name) => {
         navigator.clipboard.writeText(name)
@@ -41,6 +42,13 @@ const NameList = ({ type, path }) => {
             setLoading(false)
         }
     }
+    const handleRefresh = () => {
+        setIsRefreshing(!isRefreshing)
+        getNames()
+        setTimeout(() => {
+            setIsRefreshing(false)
+        }, 2000)
+    }
     useEffect(() => {
         if (path) {
             getNames()
@@ -49,7 +57,12 @@ const NameList = ({ type, path }) => {
 
     return (
         <div className="py-10 w-full">
-            <h1 className="text-center text-2xl font-extrabold bg-gradient-to-r from-pink-500 to-orange-400 bg-clip-text text-transparent">{type?.toUpperCase()}</h1>
+            <div className="w-full flex justify-center items-center">
+                <h1 className="text-center text-2xl cursor-pointer font-extrabold bg-gradient-to-r from-pink-500 to-orange-400 bg-clip-text text-transparent w-full">{type?.toUpperCase()}</h1>
+                <Button variant="ghoast" onClick={() => handleRefresh()} className="cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={`lucide lucide-refresh-cw-icon lucide-refresh-cw cursor-pointer ${isRefreshing ? 'animate-spin' : ''}`}><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></svg>
+                </Button>
+            </div>
             {loading ? <Skeletons /> :
                 <div className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 p-2 w-full">
                     {names?.slice(0, 20)?.map((item, index) => (
