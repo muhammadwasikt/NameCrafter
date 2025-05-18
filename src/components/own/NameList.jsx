@@ -36,18 +36,17 @@ const NameList = ({ type, path }) => {
             const response = await getReq(`/${path}`)
             setNames(response)
             setLoading(false)
+            setIsRefreshing(false)
         }
         catch (error) {
             console.error("Error fetching names:", error)
             setLoading(false)
+            setIsRefreshing(false)
         }
     }
     const handleRefresh = () => {
         setIsRefreshing(!isRefreshing)
         getNames()
-        setTimeout(() => {
-            setIsRefreshing(false)
-        }, 2000)
     }
     useEffect(() => {
         if (path) {
@@ -59,8 +58,8 @@ const NameList = ({ type, path }) => {
         <div className="py-10 w-full">
             <div className="w-full flex justify-center items-center">
                 <h1 className="text-center text-2xl cursor-pointer font-extrabold bg-gradient-to-r from-pink-500 to-orange-400 bg-clip-text text-transparent w-full">{type?.toUpperCase()}</h1>
-                <Button variant="ghoast" onClick={() => handleRefresh()} className="cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={`lucide lucide-refresh-cw-icon lucide-refresh-cw cursor-pointer ${isRefreshing ? 'animate-spin' : ''}`}><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></svg>
+                <Button variant="ghoast" onClick={() => handleRefresh()} className="cursor-pointer border" disabled={loading}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`lucide lucide-refresh-cw-icon lucide-refresh-cw cursor-pointer ${isRefreshing ? 'animate-spin' : ''}`}><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></svg>
                 </Button>
             </div>
             {loading ? <Skeletons /> :

@@ -1,22 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, } from "@/components/ui/carousel";
 import NameList from "./NameList";
+import DummyNames from "./DummyNames";
+
+
 
 const Categories = () => {
     const [isPath, setIsPath] = useState(null);
     const [isType, setIsType] = useState(null);
+    const nameListRef = useRef()
 
     const handlePath = ({ path, type }) => {
         setIsPath(path);
         setIsType(type);
+
+        nameListRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
     };
 
     const categories = [
@@ -50,8 +52,8 @@ const Categories = () => {
                     ))}
                 </CarouselContent>
             </Carousel>
-            <div className="w-full">
-                {isPath && isType && (
+            <div className="w-full" ref={nameListRef}>
+                {isPath && isType ? (
                     <div className="w-full mt-6">
                         <motion.div
                             initial={{ opacity: 0, y: 50 }}
@@ -60,6 +62,17 @@ const Categories = () => {
                             className="mt-2 text-sm text-pink-500"
                         >
                             <NameList path={isPath} type={isType} />
+                        </motion.div>
+                    </div>
+                ) : (
+                    <div className="w-full mt-6">
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.5, duration: 1 }}
+                            className="mt-2 text-sm text-pink-500"
+                        >
+                            <DummyNames />
                         </motion.div>
                     </div>
                 )}
